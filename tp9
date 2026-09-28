@@ -1,0 +1,179 @@
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+class Alumno {
+private:
+    string nombre;
+    int edad;
+    double nota1;
+    double nota2;
+    double nota3;
+    string estado;
+
+public:
+    // Constructor
+    Alumno(string nombre, int edad, double nota1, double nota2, double nota3)
+        : nombre(nombre), edad(edad), nota1(nota1), nota2(nota2), nota3(nota3) {
+        determinarEstado();
+    }
+
+    // Getters
+    string getNombre() const {
+        return nombre;
+    }
+
+    int getEdad() const {
+        return edad;
+    }
+
+    double getNota1() const {
+        return nota1;
+    }
+
+    double getNota2() const {
+        return nota2;
+    }
+
+    double getNota3() const {
+        return nota3;
+    }
+
+    string getEstado() const {
+        return estado;
+    }
+
+    // Calcular promedio
+    double calcularPromedio() const {
+        return (nota1 + nota2 + nota3) / 3;
+    }
+
+    // Determinar si está aprobado o desaprobado
+    void determinarEstado() {
+        if (calcularPromedio() >= 7) {
+            estado = "Aprobado";
+        } else {
+            estado = "Desaprobado";
+        }
+    }
+
+    // Calcular nota más alta
+    double notaMasAlta() const {
+        double mayor = nota1;
+
+        if (nota2 > mayor) {
+            mayor = nota2;
+        }
+
+        if (nota3 > mayor) {
+            mayor = nota3;
+        }
+
+        return mayor;
+    }
+
+    // Calcular nota más baja
+    double notaMasBaja() const {
+        double menor = nota1;
+
+        if (nota2 < menor) {
+            menor = nota2;
+        }
+
+        if (nota3 < menor) {
+            menor = nota3;
+        }
+
+        return menor;
+    }
+};
+
+int main() {
+    // Vector para almacenar los alumnos
+    vector<Alumno> alumnos;
+
+    string nombre;
+    double nota1, nota2, nota3;
+    int edad;
+    int numAlumnos;
+
+    cout << "Ingrese el numero de alumnos: ";
+    cin >> numAlumnos;
+
+    // Ingresar datos de los alumnos
+    for (int i = 0; i < numAlumnos; i++) {
+        cout << "\nIngrese el nombre del alumno: ";
+        cin >> nombre;
+
+        cout << "Ingrese la edad del alumno: ";
+        cin >> edad;
+
+        cout << "Ingrese la nota 1 del alumno: ";
+        cin >> nota1;
+
+        cout << "Ingrese la nota 2 del alumno: ";
+        cin >> nota2;
+
+        cout << "Ingrese la nota 3 del alumno: ";
+        cin >> nota3;
+
+        alumnos.push_back(Alumno(nombre, edad, nota1, nota2, nota3));
+    }
+
+    // Mostrar los datos de los alumnos
+    cout << "\n========== DATOS DE LOS ALUMNOS ==========\n";
+
+    for (const auto& alumno : alumnos) {
+        cout << "\nNombre: " << alumno.getNombre() << endl;
+        cout << "Edad: " << alumno.getEdad() << endl;
+        cout << "Nota 1: " << alumno.getNota1() << endl;
+        cout << "Nota 2: " << alumno.getNota2() << endl;
+        cout << "Nota 3: " << alumno.getNota3() << endl;
+        cout << "Promedio: " << alumno.calcularPromedio() << endl;
+        cout << "Estado: " << alumno.getEstado() << endl;
+        cout << "Nota mas alta: " << alumno.notaMasAlta() << endl;
+        cout << "Nota mas baja: " << alumno.notaMasBaja() << endl;
+    }
+
+    // Buscar un alumno por nombre
+    string nombreBuscado;
+    bool encontrado = false;
+
+    cout << "\n========== BUSCAR ALUMNO ==========\n";
+    cout << "Ingrese el nombre del alumno a buscar: ";
+    cin >> nombreBuscado;
+
+    for (const auto& alumno : alumnos) {
+        if (alumno.getNombre() == nombreBuscado) {
+            cout << "\nAlumno encontrado:" << endl;
+            cout << "Nombre: " << alumno.getNombre() << endl;
+            cout << "Edad: " << alumno.getEdad() << endl;
+            cout << "Promedio: " << alumno.calcularPromedio() << endl;
+            cout << "Estado: " << alumno.getEstado() << endl;
+            encontrado = true;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        cout << "\nNo se encontro un alumno con ese nombre." << endl;
+    }
+
+    // Calcular promedio general
+    double sumaPromedios = 0;
+
+    for (const auto& alumno : alumnos) {
+        sumaPromedios += alumno.calcularPromedio();
+    }
+
+    double promedioGeneral = sumaPromedios / alumnos.size();
+
+    cout << "\n========== PROMEDIO GENERAL ==========\n";
+    cout << "El promedio general de todos los alumnos es: "
+         << promedioGeneral << endl;
+
+    return 0;
+}
+```
